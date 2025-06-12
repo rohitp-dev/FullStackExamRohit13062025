@@ -16,5 +16,11 @@ export const User = sequelize.define('User', {
     allowNull: false
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  indexes: [
+    {
+      unique: true,
+      fields: ['email']
+    }
+  ]
 });

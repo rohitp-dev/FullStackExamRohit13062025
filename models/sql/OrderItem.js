@@ -6,4 +6,13 @@ export const OrderItem = sequelize.define('OrderItem', {
   productId: { type: DataTypes.STRING },
   quantity: { type: DataTypes.INTEGER },
   price: { type: DataTypes.FLOAT }
+}, {
+  indexes: [
+    {
+      fields: ['orderId']
+    },
+    {
+      fields: ['productId']
+    }
+  ]
 });
