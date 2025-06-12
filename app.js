@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { connectMongoDB } from './config/dbMongo.js';
 import { connectMySQL } from './config/dbMySql.js';
+import cors from 'cors';
 import './models/sql/User.js';
 import authRoutes from './routes/authRoutes.js';
 import productRoutes from './routes/productRoutes.js';
@@ -11,6 +12,8 @@ import orderRoutes from './routes/orderRoutes.js';
 dotenv.config();
 
 const app = express();
+app.use(cors());
+``
 app.use(express.json());
 
 connectMongoDB();
