@@ -8,12 +8,17 @@ export async function getAllProducts(query) {
     ...(category && { category })
   };
 
+  const totalCount = await Product.countDocuments(filter);
+
   const products = await Product.find(filter)
     .skip((page - 1) * limit)
     .limit(parseInt(limit));
 
-  return products;
+  const totalPages = Math.ceil(totalCount / limit);
+
+  return { products, totalPages };
 }
+
 
 export async function getProductById(id) {
   try {

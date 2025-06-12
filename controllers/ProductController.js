@@ -9,11 +9,14 @@ import { StatusCodes } from 'http-status-codes';
 
 export const listProducts = async (req, res) => {
   try {
-    const products = await getAllProducts(req.query);
+    const { products, totalPages } = await getAllProducts(req.query);
     res.status(StatusCodes.OK).json({
       message: 'Products fetched successfully',
       status: 'success',
-      data: products
+      data: {
+        products,
+        totalPages
+      }
     });
   } catch (err) {
     res.status(err.statusCode || 500).json({
@@ -22,6 +25,7 @@ export const listProducts = async (req, res) => {
     });
   }
 };
+
 
 export const getProduct = async (req, res) => {
   try {
