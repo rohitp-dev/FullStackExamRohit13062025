@@ -35,3 +35,24 @@ export async function getCart(userId) {
 export async function clearCart(userId) {
   await Cart.findOneAndDelete({ userId });
 }
+
+export async function deleteCartById(userId, itemId) {
+  const cart = await Cart.findOne({ userId });
+  if (!cart) {
+    const error = new Error('Cart not found');
+    error.statusCode = StatusCodes.NOT_FOUND;
+    throw error;
+  }
+
+  const itemIndex = cart.items.findIndex(item => item._id.equals(itemId));
+  if (itemIndex === -1) {
+    const error = new Error('Item not found in cart');
+    error.statusCode = StatusCodes.NOT_FOUND;
+    throw error;
+  }
+
+  cart.items.splice(itemIndex, 1);
+  await cart.save();
+
+  return cart;
+}
